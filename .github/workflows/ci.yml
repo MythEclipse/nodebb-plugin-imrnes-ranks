@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: imrnes-ranks-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Rank logic and syntax
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # The plugin declares engines.node >= 18 and has no dependencies, so
+      # there is nothing to install — no lockfile, no `npm ci`, nothing that
+      # can drift from what runs in production.
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      # A NodeBB plugin is loaded by Node, not bundled, so a syntax error in
+      # any file only surfaces as a restart loop on the live forum rather than
+      # as a failed deploy. `node --check` is the cheapest way to catch that
+      # before it reaches the server.
+      - name: Syntax check every JS file
+        run: |
+          set -euo pipefail
+          count=0
+          for f in $(find . -name '*.js' -not -path './node_modules/*'); do
+            node --check "$f"
+            count=$((count + 1))
+          done
+          echo "checked $count JS files"
+
+      # The real logic is the ladder parse plus the index match. It is covered
+      # with a stubbed `nodebb` global, so this does not need a NodeBB install
+      # or a database — the suite runs in about a second.
+      - name: Run the rank ladder tests
+        run: node test/ranks.test.js
+
+      # The patch scripts rewrite NodeBB core and the Harmony theme in place,
+      # so a silent no-op would drop a badge without any error. They must at
+      # least still find the anchors they replace against.
+      - name: Patch scripts must find their anchors
+        run: |
+          set -euo pipefail
+          for f in patch_hdr.js patch_post.js patch_users.js patch_parent.js; do
+            grep -qE "readFileSync|require\('fs'\)" "$f" || {
+              echo "FAIL: $f no longer reads a file — the patch mechanism changed"
+              exit 1
+            }
+            echo "  $f ok"
+          done
+
+      # plugin.json is what NodeBB reads to register the plugin. A malformed
+      # id would install the plugin under the wrong settings namespace and the
+      # ACP page would come up empty.
+      - name: Validate plugin.json
+        run: |
+          set -euo pipefail
+          id=$(node -p "require('./plugin.json').id")
+          case "$id" in
+            nodebb-plugin-*) ;;
+            *) echo "FAIL: plugin id must start with nodebb-plugin-, got '$id'"; exit 1 ;;
+          esac
+          node -e "JSON.parse(require('fs').readFileSync('plugin.json','utf8'))"
+          echo "  plugin id: $id"
