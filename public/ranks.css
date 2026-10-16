@@ -1,0 +1,156 @@
+/* ===== IMRNES RANKS — badge next to username ===== */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Audiowide&family=Rajdhani:wght@700&family=Exo+2:wght@800&family=Cinzel:wght@700&family=Press+Start+2P&family=Bungee&family=Monoton&family=Bebas+Neue&family=Chakra+Petch:wght@700&family=Saira:wght@800&family=Fjalla+One&family=Righteous&family=Titan+One&family=Rubik:wght@900&family=Michroma&family=Black+Ops+One&family=Graduate&family=Tomorrow:wght@800&family=Syncopate:wght@700&family=Anton');
+
+.imrnes-rank {
+	display: inline-block;
+	margin-left: .45rem;
+	padding: .05rem .5rem;
+	border-radius: .35rem;
+	font-size: .72em;
+	line-height: 1.5;
+	letter-spacing: .06em;
+	white-space: nowrap;
+	vertical-align: middle;
+	border: 1px solid currentColor;
+	background: color-mix(in srgb, currentColor 14%, transparent);
+	text-shadow: 0 0 6px color-mix(in srgb, currentColor 55%, transparent);
+	box-shadow: 0 0 10px color-mix(in srgb, currentColor 30%, transparent);
+	text-transform: uppercase;
+}
+
+/* 01 Neophyte */
+.ir-1  { color:#9e9e9e; font-family:'Rajdhani',sans-serif; }
+/* 02 Apprentice */
+.ir-2  { color:#80cbc4; font-family:'Exo 2',sans-serif; }
+/* 03 Pathfinder */
+.ir-3  { color:#4db6ac; font-family:'Chakra Petch',sans-serif; }
+/* 04 Seeker */
+.ir-4  { color:#4fc3f7; font-family:'Saira',sans-serif; }
+/* 05 Visionary */
+.ir-5  { color:#29b6f6; font-family:'Michroma',sans-serif; letter-spacing:.1em; }
+/* 06 Voyager */
+.ir-6  { color:#5c6bc0; font-family:'Righteous',sans-serif; }
+/* 07 Adept */
+.ir-7  { color:#7e57c2; font-family:'Audiowide',sans-serif; }
+/* 08 Hacker */
+.ir-8  { color:#ab47bc; font-family:'Press Start 2P',sans-serif; font-size:.6em; letter-spacing:.02em; }
+/* 09 Mage */
+.ir-9  { color:#ec407a; font-family:'Cinzel',serif; }
+/* 10 Wizard */
+.ir-10 { color:#f06292; font-family:'Graduate',cursive; }
+/* 11 Master */
+.ir-11 { color:#ff7043; font-family:'Bungee',cursive; }
+/* 12 Guru */
+.ir-12 { color:#ffa726; font-family:'Fjalla One',sans-serif; }
+/* 13 Legend */
+.ir-13 { color:#ffca28; font-family:'Bebas Neue',sans-serif; letter-spacing:.14em; font-size:.82em; }
+/* 14 Guardian */
+.ir-14 { color:#d4e157; font-family:'Anton',sans-serif; }
+/* 15 TITAN */
+.ir-15 { color:#9ccc65; font-family:'Black Ops One',cursive; }
+/* 16 SAGE */
+.ir-16 { color:#66bb6a; font-family:'Rubik',sans-serif; font-weight:900; }
+/* 17 VANGUARD */
+.ir-17 { color:#26c6da; font-family:'Orbitron',sans-serif; font-weight:900; letter-spacing:.12em; }
+/* 18 ASCENDED */
+.ir-18 { color:#40c4ff; font-family:'Tomorrow',sans-serif; font-weight:800; letter-spacing:.1em; }
+/* 19 DEITY */
+.ir-19 { color:#b388ff; font-family:'Monoton',cursive; font-size:.68em; letter-spacing:.08em; }
+/* 20 MYTHIC */
+.ir-20 { color:#ff4081; font-family:'Titan One',cursive; text-transform:uppercase; }
+/* 21 IMMORTAL */
+.ir-21 {
+	color:#ffd740;
+	font-family:'Orbitron',sans-serif;
+	font-weight:900;
+	letter-spacing:.18em;
+	background:linear-gradient(90deg, rgba(255,64,129,.25), rgba(255,215,64,.35), rgba(0,229,255,.25));
+	border-image:linear-gradient(90deg,#ff4081,#ffd740,#00e5ff) 1;
+	text-shadow:0 0 8px rgba(255,215,64,.9);
+	animation:ir-imbue 3.2s ease-in-out infinite;
+}
+@keyframes ir-imbue {
+	0%,100% { box-shadow:0 0 8px rgba(255,64,129,.55); }
+	50%     { box-shadow:0 0 18px rgba(255,215,64,.95); }
+}
+
+/* compact variant for /users list */
+.imrnes-rank-sm {
+	font-size: .62em;
+	margin-left: .35rem;
+	padding: 0 .35rem;
+	letter-spacing: .04em;
+	vertical-align: middle;
+}
+/* ===== next-level progress (profile bar) ===== */
+.imrnes-progress {
+	margin-top: .5rem;
+	max-width: 22rem;
+}
+
+.imrnes-progress-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: .5rem;
+	font-size: .7rem;
+	line-height: 1.4;
+	margin-bottom: .2rem;
+	opacity: .85;
+}
+
+.imrnes-progress-current {
+	font-weight: 700;
+}
+
+.imrnes-progress-next {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 60%;
+}
+
+.imrnes-progress-track {
+	position: relative;
+	height: .4rem;
+	border-radius: 999px;
+	background: rgba(128, 128, 128, .22);
+	overflow: hidden;
+}
+
+.imrnes-progress-fill {
+	position: absolute;
+	inset: 0 auto 0 0;
+	border-radius: 999px;
+	background: linear-gradient(90deg, rgba(255, 255, 255, .85), currentColor);
+	box-shadow: 0 0 8px currentColor;
+	transition: width .35s ease;
+}
+
+/* inline tip used on posts / user list */
+.imrnes-progress-tip {
+	display: inline-block;
+	margin-left: .35rem;
+	padding: 0 .3rem;
+	border: 1px dashed rgba(128, 128, 128, .45);
+	border-radius: .3rem;
+	font-size: .6em;
+	line-height: 1.6;
+	white-space: nowrap;
+	vertical-align: middle;
+	opacity: .8;
+}
+
+/* quote / reply parent line */
+.imrnes-rank-xs {
+	font-size: .58em;
+	margin-left: .3rem;
+	padding: 0 .3rem;
+	letter-spacing: .03em;
+	vertical-align: middle;
+}
+
+@media (max-width: 767px) {
+	.imrnes-progress { max-width: 100%; }
+	.imrnes-progress-tip { display: none; }
+}

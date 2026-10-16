@@ -1,0 +1,49 @@
+{
+  "id": "nodebb-plugin-imrnes-ranks",
+  "name": "IMRNES Ranks",
+  "description": "Custom rank titles based on post count, shown next to the username with unique colour + font per level, plus next-level progress",
+  "library": "./library.js",
+  "templates": "public/templates",
+  "modules": {
+    "../admin/plugins/imrnes-ranks.js": "public/js/admin.js"
+  },
+  "hooks": [
+    {
+      "hook": "static:app.load",
+      "method": "load"
+    },
+    {
+      "hook": "filter:meta.getLinkTags",
+      "method": "getLinkTags"
+    },
+    {
+      "hook": "filter:admin.header.build",
+      "method": "adminMenu"
+    },
+    {
+      "hook": "filter:user.getFields",
+      "method": "getFields"
+    },
+    {
+      "hook": "filter:posts.modifyUserInfo",
+      "method": "modifyUserInfo"
+    },
+    {
+      "hook": "filter:account/profile.build",
+      "method": "accountProfileBuild"
+    },
+    {
+      "hook": "filter:users.get",
+      "method": "usersGet"
+    },
+    {
+      "hook": "filter:topics.addPostData",
+      "method": "topicsAddPostData"
+    },
+    {
+      "hook": "filter:settings.set",
+      "method": "settingsSet"
+    }
+  ],
+  "faIcon": "fa-level-up"
+}

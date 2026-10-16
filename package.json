@@ -1,0 +1,20 @@
+{
+  "name": "nodebb-plugin-imrnes-ranks",
+  "version": "2.2.0",
+  "description": "Rank titles by post count with per-level colour + font, plus next-level progress",
+  "main": "library.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "nbbpm": {
+    "compatibility": "^4.0.0"
+  },
+  "keywords": [
+    "nodebb",
+    "plugin",
+    "ranks",
+    "levels"
+  ],
+  "dependencies": {}
+}
