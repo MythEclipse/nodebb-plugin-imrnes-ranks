@@ -100,3 +100,41 @@ takes down the whole forum via the restart loop. Use a literal `/assets/...`.
 ## License
 
 MIT
+
+## NodeBB core fork
+
+One surface cannot be patched from a plugin: the rank badge next to a
+**quoted parent** in `src/views/partials/topic/post-parent.tpl`. That file
+lives in NodeBB core, not in the theme, so neither a hook nor a theme patch
+can reach it.
+
+The change is one line on top of upstream `d3eecfb0`:
+
+```
+asepharyana/NodeBB  (fork of NodeBB/NodeBB)  ->  branch `imrnes`
+  commit 2307d63  feat(views): show the rank badge on quoted parents
+```
+
+That fork branch is byte-for-byte identical to the running install
+(5633 files compared, 0 differences), so it doubles as a reproducible
+snapshot of production.
+
+### Which surface comes from where
+
+| Surface | Lives in | Provided by |
+|---|---|---|
+| profile header | Harmony theme | `patch_hdr.js` |
+| users list item | Harmony theme | `patch_users.js` |
+| topic post | Harmony theme | `patch_post.js` |
+| quoted parent | **NodeBB core** | the fork commit above |
+| stylesheet | `public/` + hook | this plugin (`filter:meta.getLinkTags`) |
+
+A NodeBB or Harmony upgrade drops the three theme patches and may drop the
+core patch too. Re-run the scripts, and re-check the fork branch:
+
+```bash
+cd /opt/nodebb/app
+grep -c imrnes-rank src/views/partials/topic/post-parent.tpl        # expect >= 1
+grep -c imrnes-rank node_modules/nodebb-theme-harmony/templates/partials/account/header.tpl
+sudo -u nodebb ./nodebb build theme && systemctl restart nodebb
+```
